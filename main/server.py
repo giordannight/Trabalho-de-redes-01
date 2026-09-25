@@ -1,0 +1,35 @@
+import socket
+
+HOST = '127.0.0.1'
+PORT = 12000
+
+socket_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+socket_server.bind((HOST, PORT))
+
+socket_server.listen(1)
+print(f'Server is listening on {HOST}:{PORT}...')
+print(f'Waiting for a connection...')
+
+while True:
+
+    conection, address = socket_server.accept()
+    print(f'Connection established with {address[0]}:{address[1]}')
+
+    data = conection.recv(1024).decode('utf-8')
+
+    if data:
+
+        temperature = float(data)
+        print(f'Received temperature: {temperature}°C')
+
+        if temperature >= 30.0:
+            response = 'Temperature is too high!'
+        elif temperature >= 15.0: 
+            response = 'Temperature is normal.'
+        else:
+            response = 'Temperature is too low!'
+
+    conection.send(response.encode('utf-8'))
+
+    conection.close()
