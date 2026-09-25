@@ -23,12 +23,9 @@ while True:
         temperature = float(data)
         print(f'Received temperature: {temperature}°C')
 
-        if temperature >= 30.0:
-            response = 'Temperature is too high!'
-        elif temperature >= 15.0: 
-            response = 'Temperature is normal.'
-        else:
-            response = 'Temperature is too low!'
+        faranheit = (temperature * 1.8) + 32
+
+        response = f'Faranheit: {faranheit}°F'
 
     conection.send(response.encode('utf-8'))
 
